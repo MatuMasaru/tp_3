@@ -2,16 +2,16 @@ import random
 
 class Grafo:
     def __init__(self):
-        " crea el grafo vacio"
+        """ crea el grafo vacio"""
         self.numero_vertices = 0
         self.vertices = {}
 
     def vertice_pertenece(self, vertice):
-        "devuelve true si el vertice pertenece , o false en caso contrario"
+        """devuelve true si el vertice pertenece , o false en caso contrario"""
         return vertice in self.vertices
 
     def agregar_vertice(self, nuevo_vertice):
-        "agrega un vertice al grafo"
+        """agrega un vertice al grafo"""
         if not self.vertice_pertenece(nuevo_vertice):
             self.vertices[nuevo_vertice] = {}
             self.numero_vertices += 1
