@@ -7,7 +7,7 @@ SEPARACION_FLECHA = " -> "
 SEPARACION_COMA = ", "
 
 def enlistar_recorrido(lista , destino , padres):
-    if destino ==None:
+    if destino == None:
         return
     enlistar_recorrido(lista, padres[destino],padres)
     lista.append(destino)
@@ -87,7 +87,7 @@ def filtrar_comunidades( label , integrantes ):
     return aux_comunidades
         
 def imprimir_comunidades(comunidades,  volumen_comunidades, tamanio_minimo):
-    contador =1
+    contador = 1
     for j in volumen_comunidades:
         if volumen_comunidades[j] >= tamanio_minimo:
             print("comunidad {}: {}".format(contador,comunidades[j].join(SEPARACION_COMA)))
@@ -99,8 +99,11 @@ def mostrar_comunidades( grafo , n):
     comunidades  = filtrar_comunidades( biblioteca.label_propagation( grafo ) , volumen_comunidad )
     imprimir_comunidades( comunidades , volumen_comunidad , n)
 
-#def divulgar_rumor(grafo, delincuente, saltos):
-
+def divulgar_rumor(grafo ,delicuente ,saltos):
+    visitados = set()
+    contador = 0
+    biblioteca.radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados) 
+    biblioteca.imprimir_lista(visitados ,SEPARACION_COMA)
 
 def hay_ciclo(grafo, vertice, saltos , recorrido, contador , origen):
     if contador == saltos:
@@ -124,4 +127,13 @@ def divulgar_ciclo_n(grafo , delincuente, saltos):
     else:
          print("No se encontro recorrido")   
 
-#def componentes_fuert_conex(grafo):
+
+def componentes_fuert_conex(grafo):
+    conjuntos = biblioteca.cfc(grafo)
+    contador = 1
+    for c in conjuntos:
+        print("CFC " + str(contador) + ":",end = '')
+        biblioteca.imprimir_lista(c ,SEPARACION_COMA)
+
+
+

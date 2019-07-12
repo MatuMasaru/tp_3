@@ -32,9 +32,9 @@ def ejecutar_comando(comando, grafo, parametros):
     elif comando is COMUNIDADES:
         comandos.mostrar_comunidades(grafo,parametros[1])
     elif comando is DIVULGAR:
-        comandos.divulgar_rumor(grafo, parametros[1], parametros[2])
+        comandos.divulgar_rumor(grafo ,parametros[1] ,parametros[2])
     elif comando is DIVULGAR_CICLO:
-        comandos.divulgar_ciclo_n(grafo,parametros[1], parametros[2])
+        comandos.divulgar_ciclo_n(grafo ,parametros[1] ,parametros[2])
     elif comando is COM_FUERT_CONEXAS:      
         comandos.componentes_fuert_conex(grafo)
     
