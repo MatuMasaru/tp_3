@@ -1,4 +1,11 @@
 import grafo
+import deque
+import collections
+
+
+def imprimir_lista(lista, separador):
+    print(lista.join(separador))
+
 
 def camino_minimo_bfs(grafo, origen):
     """este es el camino minimo para la centralidad, aun no entiendo sobre colas, odio no tener internet"""
@@ -22,6 +29,34 @@ def camino_minimo_bfs(grafo, origen):
                 q.encolar(w)
     
     return orden,padres
+
+
+def minimos_seguimientos_hasta_destino( grafo, origen , destino ):
+    """ devuelve un diccionario de padres, de dependencias de como llegar desde origen a destino, en caso que no llega a destino
+        devuelve el diccionario pero 'destino' no estara en el diccionario"""
+    
+    padres={}
+    visitados=set()
+    
+    cola = collections.deque()
+
+    visitados(origen)
+    cola.append(origen)
+
+    padres[origen] = None
+
+    while not cola(): 
+        v = cola.popleft()
+        
+        for w in grafo.adyacentes( v ):
+            if w not in visitados:
+                visitados(w)
+                padres[w] = v   #esto busca por bfs al destino y si encuentra corta y lo pone como visitado.
+                if w == destino :
+                    break
+                q.encolar(w)
+
+    
 
 def ordenar_vertices(grafo , distancia):# aplicar counting sort. para la centralidad.
 

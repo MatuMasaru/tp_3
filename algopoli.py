@@ -1,7 +1,7 @@
 import grafo
 import sys
 import comandos
-import biblioteca
+
 MIN_SEGUIMIENTOS = "min_segimientos"
 MAS_IMPORTARNTES = "mas_imp"
 PERSECUCION = "persecucion"
@@ -14,7 +14,6 @@ def procesar_linea(separador,linea):
     """devuelve una lista de string separados por el separador(como el split)"""
     return (linea.rstrip('\n')).split(separador)
 
-
 def cargar_vertices(archivo, grafo):
     for linea in archivo :
         vertices = procesar_linea('\t',linea)
@@ -25,7 +24,7 @@ def cargar_vertices(archivo, grafo):
 
 def ejecutar_comando(comando, grafo, parametros):
     if comando is MIN_SEGUIMIENTOS:
-        comandos.minimos_seguimientos(grafo,parametros[1],parametros[2])
+        comandos.minimo_seguimiento(grafo,parametros[1],parametros[2])
     elif comando is MAS_IMPORTARNTES:
         comandos.mas_importantes(grafo,int(parametros[1]) )
     elif comando is PERSECUCION:
@@ -39,15 +38,11 @@ def ejecutar_comando(comando, grafo, parametros):
     elif comando is COM_FUERT_CONEXAS:      
         comandos.componentes_fuert_conex(grafo)
     
-
-
-
 def realizar_comandos(graf):
     archivo = "stdin"
     for linea in archivo:
         linea = procesar_linea(" ", linea)
         ejecutar_comando(linea[0],graf, linea)
-
 
 def main():
     nom_archivo = sys.argv[1]
