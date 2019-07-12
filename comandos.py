@@ -36,7 +36,7 @@ def minimos_seguimientos( grafo, origen , destino ):
     if destino in visitados :   #si esta en visitados, apilo en una pilapor el ordene me fijo el padre, 
         pila.apilar(destino)
         aux = destino
-        while aux not None:
+        while not aux :
             aux= padres[aux]
             pila.apilar(aux)
         imprimir_pila(pila)
@@ -45,19 +45,22 @@ def minimos_seguimientos( grafo, origen , destino ):
         print("seguimiento imposible")
 
     
-def mas_importantes(cant ):
+def mas_importantes(grafo, cant ):
     """ Imprime, de mayor a menor importancia, los cant delincuentes más importantes."""
     #Betweeness Centrality, aproximado.   o    PageRank.  se usa cualquiera dentro de este
 
 
-def persecucion_rapida(parametros, k ):
+def persecucion_rapida(grafo ,parametros, k ):
     """Dado cada uno de los delincuentes pasados (agentes encubiertos), 
     obtener cuál es el camino más corto para llegar desde alguno de los delincuentes pasados por parámetro, 
     a alguno de los K delincuentes más importantes.
     En caso de tener caminos de igual largo, priorizar los que vayan a un delincuente más importante."""
 
+def encontrar_comunidades(grafo,n):
 
 
-def encontrar_comunidades(n):
+def divulgar_rumor(grafo, delincuente, saltos):
 
+def divulgar_ciclo_n(grafo,delincuente, saltos):
 
+def componentes_fuert_conex(grafo):

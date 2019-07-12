@@ -13,7 +13,7 @@ def camino_minimo_bfs(grafo, origen):
     q.encolar(origen)
 
     while not q.esta_vacia():
-        v = q.desencolar()
+        v = q.desencolar()x
         for w in grafo.adyacentes(v):
             if w not in visitados:
                 visitados[w]
