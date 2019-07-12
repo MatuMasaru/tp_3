@@ -30,7 +30,7 @@ def ejecutar_comando(comando, grafo, parametros):
     elif comando is PERSECUCION:
         comandos.persecucion_rapida(grafo ,(parametros[1]).split(','), parametros[2] )
     elif comando is COMUNIDADES:
-        comandos.encontrar_comunidades(grafo,parametros[1])
+        comandos.mostrar_comunidades(grafo,parametros[1])
     elif comando is DIVULGAR:
         comandos.divulgar_rumor(grafo, parametros[1], parametros[2])
     elif comando is DIVULGAR_CICLO:

@@ -1,6 +1,8 @@
 import grafo
+import random
 import collections
 
+LABEL_ITERACIONES = 100
 
 def imprimir_lista(lista, separador):
 
@@ -79,3 +81,28 @@ def betweeness_centrality(grafo):
             if w == v: continue
             cent[w] += cent_aux[w]
     return cent
+
+def max_freq(adyacentes, label):
+    dict_recurrencia = {}
+    for j in adyacentes:
+        if j not in dict_recurrencia:
+            dict_recurrencia[ label [j] ] = 1
+        else :
+            dict_recurrencia[ label [j] ] += 1
+    maximo = max(dict_recurrencia.items(), key = lambda x:x[1] )
+    return maximo[0]
+
+
+def label_propagation( grafo ):
+    label={}
+    contador = 0
+    for v in grafo.vertices:
+        label[v]= contador
+        contador += 1
+    vertices = label.keys()
+    
+    for j in range(0,LABEL_ITERACIONES):
+        random.shuffle(vertices)
+        for i in vertices:
+            label[i] = max_freq(grafo.adyacentes(i), label)
+    return label

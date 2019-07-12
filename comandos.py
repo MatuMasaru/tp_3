@@ -1,7 +1,9 @@
 import grafo
+import random
 import biblioteca
 import queue
-SEPARACION_FLECHA= " -> "
+
+SEPARACION_FLECHA = " -> "
 SEPARACION_COMA = ", "
 
 def enlistar_recorrido(lista , destino , padres):
@@ -33,11 +35,33 @@ def persecucion_rapida(grafo ,parametros, k ):
     a alguno de los K delincuentes más importantes.
     En caso de tener caminos de igual largo, priorizar los que vayan a un delincuente más importante."""
 
-def encontrar_comunidades(grafo,n):
+def filtrar_comunidades( label , integrantes ):
+    aux_comunidades = {}
+    for j in label:
+        if label[j] in integrantes:
+            integrantes[ label[j ] ] +=1
+        else:
+            integrantes[ label[j] ] =1
+        aux_comunidades[  label[ j] ].append(j)
+    return aux_comunidades
+        
 
+def imprimir_comunidades(comunidades,  volumen_comunidades, tamanio_minimo):
+    contador =1
+    for j in volumen_comunidades:
+        if volumen_comunidades[j] >= tamanio_minimo:
+            auxiliar = comunidades[j].join(', ')
+            print("comunidad {}: {}".format(contador,auxiliar))
+            contador += 1
+
+def mostrar_comunidades( grafo , n):
+    """ imprime en pantalla las comunidades de minimo n elementos en ellos"""
+    volumen_comunidad ={}
+    comunidades  = filtrar_comunidades( biblioteca.label_propagation( grafo ) , volumen_comunidad )
+    imprimir_comunidades( comunidades , volumen_comunidad , n)
 
 def divulgar_rumor(grafo, delincuente, saltos):
 
-def divulgar_ciclo_n(grafo,delincuente, saltos):
+def divulgar_ciclo_n(grafo , delincuente, saltos):
 
 def componentes_fuert_conex(grafo):
