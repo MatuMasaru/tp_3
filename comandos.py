@@ -2,7 +2,7 @@ import grafo
 import biblioteca
 import queue
 SEPARACION_FLECHA= " -> "
-
+SEPARACION_COMA = ", "
 
 def enlistar_recorrido(lista , destino , padres):
     if destino ==null:
@@ -20,11 +20,12 @@ def minimo_seguimiento( grafo, origen , destino ):
     else :
         print("Seguimiento imposible")
 
-    
 def mas_importantes(grafo, cant ):
     """ Imprime, de mayor a menor importancia, los cant delincuentes más importantes."""
     #Betweeness Centrality, aproximado.   o    PageRank.  se usa cualquiera dentro de este
-
+    centralidad = biblioteca.betweeness_centrality(grafo)
+    lista = list(sorted(centralidad.items(), key = lambda x:x[1], reverse = True))
+    biblioteca.imprimir_lista(lista[0:cant],SEPARACION_COMA)
 
 def persecucion_rapida(grafo ,parametros, k ):
     """Dado cada uno de los delincuentes pasados (agentes encubiertos), 
