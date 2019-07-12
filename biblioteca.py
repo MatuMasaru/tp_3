@@ -28,16 +28,16 @@ def camino_minimo_bfs(grafo, origen):
                 padres[w] = v
                 orden[w] = orden[v] + 1
                 cola.append(w)
-    
-    return orden,padres
 
-def minimos_seguimientos_hasta_destino( grafo, origen , destino ):
+    return orden ,padres
+
+def minimos_seguimientos_hasta_destino(grafo, origen ,destino):
     """ devuelve un diccionario de padres, de dependencias de como llegar desde origen a destino, en caso que no llega a destino
         devuelve el diccionario pero 'destino' no estara en el diccionario"""
-    
-    padres={}
-    visitados=set()
-    
+
+    padres = {}
+    visitados = set()
+
     cola = collections.deque()
 
     visitados.add(origen)
@@ -45,9 +45,9 @@ def minimos_seguimientos_hasta_destino( grafo, origen , destino ):
 
     padres[origen] = None
 
-    while cola: 
+    while cola:
         v = cola.popleft()
-        
+
         for w in grafo.adyacentes( v ):
             if w not in visitados:
                 visitados.add(w)
@@ -57,7 +57,7 @@ def minimos_seguimientos_hasta_destino( grafo, origen , destino ):
                 cola.append(w)
     return padres
 
-def ordenar_vertices(grafo , distancia):# aplicar counting sort. para la centralidad.
+def ordenar_vertices(grafo, distancia):# aplicar counting sort. para la centralidad.
     """devuelve un iterable  ordenado de mayor a menor  en funcion del valor del dict distancia"""
     return list(sorted(distancia.items(),key = lambda x:x[1] , reverse = True ))
 
@@ -95,15 +95,73 @@ def max_freq(adyacentes, label):
 
 
 def label_propagation( grafo ):
-    label={}
+    label = {}
     contador = 0
     for v in grafo.vertices:
         label[v]= contador
         contador += 1
     vertices = label.keys()
-    
+
     for j in range(0,LABEL_ITERACIONES):
         random.shuffle(vertices)
         for i in vertices:
             label[i] = max_freq(grafo.adyacentes(i), label)
     return label
+
+def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
+    visitados.agregar(v)
+    s.deque(v)
+    p.deque(v)
+    for w in grafo.adyacentes(v):
+        if w not in visitados:
+            orden[w] = orden[v] + 1
+            dfs_cfc(grafo, w, visitados, orden, p, s, cfcs, en_cfs)
+        elif w not in en_cfs:
+            while orden[p(-1)] > orden[w]:
+                p.pop()
+
+    if p(-1) == v:
+        p.pop()
+        z = None
+        nueva_cfc = []
+    while z != v:
+        z = s.desapilar()
+        en_cfs.agregar(z)
+        nueva_cfc.append(z)
+        cfcs.append(nueva_cfc)
+
+def cfc(grafo):
+    visitados = set()
+    orden = {}
+    pila_p = collections.deque()
+    pila_s = collections.deque()
+    cfcs = []
+    en_cfs = set()
+    for v in grafo:
+        if v not in visitados:
+            orden[v] = 0
+            dfs_cfc(grafo, v, visitados, orden, pila_p, pila_s, cfcs, en_cfs)
+    return cfcs
+
+def imprimir_cfc(grafo):
+    conjuntos = cfc(grafo)
+    contador = 1
+    for c in conjuntos:
+        print("CFC " + str(contador) + ":",end = '')
+        imprimir_lista(c,', ')
+
+
+def radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados):
+    visitados.append(delicuente)
+    for w in grafo.adyacentes(delicuente):
+        if ((w is not visitados) and (contador < saltos)):
+            contador += 1
+            radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados)
+            contador -= 1    
+
+def divulgar_rumor(grafo ,saltos ,delicuente):
+    visitados = set()
+    contador = 0
+    radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados) 
+
+    imprimir_lista(visitados ,', ')
