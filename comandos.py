@@ -1,7 +1,7 @@
 import grafo
 import random
 import biblioteca
-import queue
+import copy
 
 SEPARACION_FLECHA = " -> "
 SEPARACION_COMA = ", "
@@ -14,26 +14,67 @@ def enlistar_recorrido(lista , destino , padres):
 
 def minimo_seguimiento( grafo, origen , destino ):
     """imprime el minimo seguimiento desde origen, hasta destino, de no poder realizarse imprime 'Seguimiento imposible'"""
-    padres = biblioteca.minimos_seguimientos_hasta_destino( grafo, origen , destino )
-    if destino in padres:
+    padres, vertice = biblioteca.minimos_seguimientos_hasta_destino( grafo, origen , destino )
+    if vertice:
         lista = []
         enlistar_recorrido(lista,destino, padres)
         biblioteca.imprimir_lista(lista, SEPARACION_FLECHA)
     else :
         print("Seguimiento imposible")
 
+def k_mas_importantes(grafo,k):
+    """devuelve una lista con los k elementos mas importantes del grafo(delincuentes)"""
+    centralidad = biblioteca.betweeness_centrality(grafo)
+    lista = list(sorted(centralidad.items(), key = lambda x:x[1], reverse = True))
+    lista_aux = []
+    for j in range(k):
+       lista_aux.append(lista[j][0])
+
+    return lista_aux
+
 def mas_importantes(grafo, cant ):
     """ Imprime, de mayor a menor importancia, los cant delincuentes más importantes."""
     #Betweeness Centrality, aproximado.   o    PageRank.  se usa cualquiera dentro de este
-    centralidad = biblioteca.betweeness_centrality(grafo)
-    lista = list(sorted(centralidad.items(), key = lambda x:x[1], reverse = True))
-    biblioteca.imprimir_lista(lista[0:cant],SEPARACION_COMA)
+    lista_importantes = k_mas_importantes( grafo, cant )
+    biblioteca.imprimir_lista(lista_importantes,SEPARACION_COMA)
 
-#def persecucion_rapida(grafo ,parametros, k ):
+def persecucion_rapida(grafo ,parametros, k ):
     """Dado cada uno de los delincuentes pasados (agentes encubiertos), 
     obtener cuál es el camino más corto para llegar desde alguno de los delincuentes pasados por parámetro, 
     a alguno de los K delincuentes más importantes.
     En caso de tener caminos de igual largo, priorizar los que vayan a un delincuente más importante."""
+    lista_importantes = k_mas_importantes( grafo, k )
+    delincuentes = parametros.split(',')
+
+    recorridos_delincuentes ={}
+    vertice_max = ()
+    for i in delincuentes:
+        padres,distancias = biblioteca.minimos_seguimientos_hasta_destino( grafo , i , lista_importantes )
+        vertice = None
+        for j in lista_importantes:
+            if j in distancias:
+                vertice = j
+                break
+
+
+        if not vertice_max and vertice:
+            recorridos_delincuentes = copy.copy(padres)
+            vertice_max = ( vertice , distancias[vertice] )
+
+        elif vertice :
+            if (vertice_max[1] > distancias[vertice]):
+                recorridos_delincuentes = copy.copy(padres)
+                vertice_max = ( vertice , distancias[vertice] )
+
+            elif (vertice_max[1] == distancias[vertice])and (lista_importantes.index(vertice_max[0])>lista_importantes.index(vertice_max[0])):
+                recorridos_delincuentes = copy.copy(padres)
+                vertice_max = ( vertice , distancias[vertice] )
+    
+    lista_a_imprimir={}
+    enlistar_recorrido(lista_a_imprimir, vertice_max[0] , recorridos_delincuentes)
+    biblioteca.imprimir_lista(lista_a_imprimir, SEPARACION_FLECHA)
+
+
 
 def filtrar_comunidades( label , integrantes ):
     aux_comunidades = {}
@@ -49,8 +90,7 @@ def imprimir_comunidades(comunidades,  volumen_comunidades, tamanio_minimo):
     contador =1
     for j in volumen_comunidades:
         if volumen_comunidades[j] >= tamanio_minimo:
-            auxiliar = comunidades[j].join(', ')
-            print("comunidad {}: {}".format(contador,auxiliar))
+            print("comunidad {}: {}".format(contador,comunidades[j].join(SEPARACION_COMA)))
             contador += 1
 
 def mostrar_comunidades( grafo , n):

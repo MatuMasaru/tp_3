@@ -34,28 +34,30 @@ def camino_minimo_bfs(grafo, origen):
 def minimos_seguimientos_hasta_destino(grafo, origen ,destino):
     """ devuelve un diccionario de padres, de dependencias de como llegar desde origen a destino, en caso que no llega a destino
         devuelve el diccionario pero 'destino' no estara en el diccionario"""
-
-    padres = {}
-    visitados = set()
-
+    padres={}
+    visitados=set()
+    orden = {}
     cola = collections.deque()
 
     visitados.add(origen)
-    cola.append(origen)
 
+    orden[origen] = 0
     padres[origen] = None
 
+    cola.append(origen)
     while cola:
+
         v = cola.popleft()
 
         for w in grafo.adyacentes( v ):
             if w not in visitados:
                 visitados.add(w)
                 padres[w] = v   #esto busca por bfs al destino y si encuentra corta y lo pone como visitado.
-                if w == destino :
-                    return padres
+                orden[w] = orden[v] + 1
+                if w in destino:
+                    return padres,orden 
                 cola.append(w)
-    return padres
+    return padres,orden 
 
 def ordenar_vertices(grafo, distancia):# aplicar counting sort. para la centralidad.
     """devuelve un iterable  ordenado de mayor a menor  en funcion del valor del dict distancia"""
@@ -157,7 +159,7 @@ def radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados):
         if ((w is not visitados) and (contador < saltos)):
             contador += 1
             radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados)
-            contador -= 1    
+            contador -= 1
 
 def divulgar_rumor(grafo ,saltos ,delicuente):
     visitados = set()
