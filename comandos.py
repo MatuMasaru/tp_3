@@ -7,14 +7,14 @@ SEPARACION_FLECHA = " -> "
 SEPARACION_COMA = ", "
 
 def enlistar_recorrido(lista , destino , padres):
-    if destino ==null:
+    if destino ==None:
         return
     enlistar_recorrido(lista, padres[destino],padres)
     lista.append(destino)
 
 def minimo_seguimiento( grafo, origen , destino ):
     """imprime el minimo seguimiento desde origen, hasta destino, de no poder realizarse imprime 'Seguimiento imposible'"""
-    padres = minimos_seguimientos_hasta_destino( grafo, origen , destino )
+    padres = biblioteca.minimos_seguimientos_hasta_destino( grafo, origen , destino )
     if destino in padres:
         lista = []
         enlistar_recorrido(lista,destino, padres)
@@ -29,7 +29,7 @@ def mas_importantes(grafo, cant ):
     lista = list(sorted(centralidad.items(), key = lambda x:x[1], reverse = True))
     biblioteca.imprimir_lista(lista[0:cant],SEPARACION_COMA)
 
-def persecucion_rapida(grafo ,parametros, k ):
+#def persecucion_rapida(grafo ,parametros, k ):
     """Dado cada uno de los delincuentes pasados (agentes encubiertos), 
     obtener cuál es el camino más corto para llegar desde alguno de los delincuentes pasados por parámetro, 
     a alguno de los K delincuentes más importantes.
@@ -45,7 +45,6 @@ def filtrar_comunidades( label , integrantes ):
         aux_comunidades[  label[ j] ].append(j)
     return aux_comunidades
         
-
 def imprimir_comunidades(comunidades,  volumen_comunidades, tamanio_minimo):
     contador =1
     for j in volumen_comunidades:
@@ -60,8 +59,29 @@ def mostrar_comunidades( grafo , n):
     comunidades  = filtrar_comunidades( biblioteca.label_propagation( grafo ) , volumen_comunidad )
     imprimir_comunidades( comunidades , volumen_comunidad , n)
 
-def divulgar_rumor(grafo, delincuente, saltos):
+#def divulgar_rumor(grafo, delincuente, saltos):
+
+
+def hay_ciclo(grafo, vertice, saltos , recorrido, contador , origen):
+    if contador == saltos:
+        if origen == vertice:
+            recorrido.append(vertice)
+            return True
+        else:
+            return False
+    for j in grafo.adyacentes(vertice):
+        recorrido.append(vertice)
+        if hay_ciclo(grafo, j , saltos , recorrido, contador+1, origen):
+            return True
+        recorrido.pop()
+    return False
 
 def divulgar_ciclo_n(grafo , delincuente, saltos):
+    recorrido= []
+    contador = 0 
+    if hay_ciclo(grafo, delincuente, saltos, recorrido , contador ,delincuente):
+        biblioteca.imprimir_lista(recorrido, SEPARACION_FLECHA)
+    else:
+         print("No se encontro recorrido")   
 
-def componentes_fuert_conex(grafo):
+#def componentes_fuert_conex(grafo):

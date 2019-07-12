@@ -53,8 +53,9 @@ def minimos_seguimientos_hasta_destino( grafo, origen , destino ):
                 visitados.add(w)
                 padres[w] = v   #esto busca por bfs al destino y si encuentra corta y lo pone como visitado.
                 if w == destino :
-                    break
+                    return padres
                 cola.append(w)
+    return padres
 
 def ordenar_vertices(grafo , distancia):# aplicar counting sort. para la centralidad.
     """devuelve un iterable  ordenado de mayor a menor  en funcion del valor del dict distancia"""
