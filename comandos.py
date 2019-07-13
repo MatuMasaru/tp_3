@@ -30,7 +30,7 @@ def k_mas_importantes(grafo,k):
     centralidad = biblioteca.betweeness_centrality(grafo)
     lista = list(sorted(centralidad.items(), key = lambda x:x[1], reverse = True))
     lista_aux = []
-    for j in range(k):
+    for j in range( k ):
        lista_aux.append(lista[j][0])
 
     return lista_aux
@@ -46,9 +46,8 @@ def persecucion_rapida(grafo ,parametros, k ):
     obtener cuál es el camino más corto para llegar desde alguno de los delincuentes pasados por parámetro, 
     a alguno de los K delincuentes más importantes.
     En caso de tener caminos de igual largo, priorizar los que vayan a un delincuente más importante."""
-    lista_importantes = k_mas_importantes( grafo, k )
-    delincuentes = parametros.split(',')
-
+    lista_importantes = k_mas_importantes( grafo, int(k) )
+    delincuentes = parametros
     recorridos_delincuentes ={}
     vertice_max = ()
     for i in delincuentes:
@@ -58,48 +57,46 @@ def persecucion_rapida(grafo ,parametros, k ):
             if j in distancias:
                 vertice = j
                 break
-
-
         if not vertice_max and vertice:
             recorridos_delincuentes = copy.copy(padres)
             vertice_max = ( vertice , distancias[vertice] )
-
         elif vertice :
             if (vertice_max[1] > distancias[vertice]):
                 recorridos_delincuentes = copy.copy(padres)
                 vertice_max = ( vertice , distancias[vertice] )
-
             elif (vertice_max[1] == distancias[vertice])and (lista_importantes.index(vertice_max[0])>lista_importantes.index(vertice_max[0])):
                 recorridos_delincuentes = copy.copy(padres)
                 vertice_max = ( vertice , distancias[vertice] )
     
-    lista_a_imprimir={}
+    lista_a_imprimir=[]
     enlistar_recorrido(lista_a_imprimir, vertice_max[0] , recorridos_delincuentes)
     biblioteca.imprimir_lista(lista_a_imprimir, SEPARACION_FLECHA)
 
 
 def filtrar_comunidades( label , integrantes ):
     aux_comunidades = {}
+    
     for j in label:
         if label[j] in integrantes:
             integrantes[ label[j ] ] +=1
         else:
             integrantes[ label[j] ] =1
-        aux_comunidades[  label[ j] ].append(j)
+            aux_comunidades[  label[ j ] ] = []
+        aux_comunidades[  label[ j ] ].append(j)
     return aux_comunidades
         
 def imprimir_comunidades(comunidades,  volumen_comunidades, tamanio_minimo):
     contador = 1
-    for j in volumen_comunidades:
-        if volumen_comunidades[j] >= tamanio_minimo:
-            print("comunidad {}: {}".format(contador,comunidades[j].join(SEPARACION_COMA)))
+    for j in volumen_comunidades.items():
+        if volumen_comunidades[ j[0 ] ] >= tamanio_minimo:
+            print("comunidad {}: {}".format(contador,SEPARACION_COMA.join(comunidades[j[0]])))
             contador += 1
 
 def mostrar_comunidades( grafo , n):
     """ imprime en pantalla las comunidades de minimo n elementos en ellos"""
     volumen_comunidad ={}
     comunidades  = filtrar_comunidades( biblioteca.label_propagation( grafo ) , volumen_comunidad )
-    imprimir_comunidades( comunidades , volumen_comunidad , n)
+    imprimir_comunidades( comunidades , volumen_comunidad , int(n))
 
 def divulgar_rumor(grafo ,delicuente ,saltos):
     visitados = set()
