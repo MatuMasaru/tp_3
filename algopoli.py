@@ -25,33 +25,66 @@ def cargar_vertices(archivo, grafo):
         grafo.agregar_arista(vertices[0],vertices[1])
 
 def ejecutar_comando(comando, grafo, parametros):
-    if comando is MIN_SEGUIMIENTOS:
+    if (comando == MIN_SEGUIMIENTOS):
+        print("############################################################")
+        print("empieza min_segimiento")
+        print("############################################################")
         comandos.minimo_seguimiento(grafo,parametros[1],parametros[2])
-    elif comando is MAS_IMPORTARNTES:
-        comandos.mas_importantes(grafo,int(parametros[1]) )
-    elif comando is PERSECUCION:
-        comandos.persecucion_rapida(grafo ,(parametros[1]).split(','), parametros[2] )
-    elif comando is COMUNIDADES:
-        comandos.mostrar_comunidades(grafo,parametros[1])
-    elif comando is DIVULGAR:
-        comandos.divulgar_rumor(grafo ,parametros[1] ,parametros[2])
-    elif comando is DIVULGAR_CICLO:
-        comandos.divulgar_ciclo_n(grafo ,parametros[1] ,parametros[2])
-    elif comando is COM_FUERT_CONEXAS:      
+    elif comando == MAS_IMPORTARNTES:
+        if parametros[1].isdigit():
+            print("############################################################")
+            print("empieza mas_importantes")
+            print("############################################################")
+            comandos.mas_importantes(grafo,int(parametros[1]) )
+        else:
+            print("el parametro ",parametros[1],"no es un numero")
+    elif comando == PERSECUCION:
+        if parametros[2].isdigit():
+            print("empieza persecucion")
+            print("############################################################")
+            comandos.persecucion_rapida(grafo ,(parametros[1]).split(','), parametros[2] )
+        else:
+            print("el parametro ",parametros[2],"no es un numero")
+    elif comando == COMUNIDADES:
+        if parametros[1].isdigit():
+            print("############################################################")
+            print("empieza comunidades")
+            print("############################################################")
+            comandos.mostrar_comunidades(grafo,parametros[1])
+        else:
+            print("el parametro ",parametros[1],"no es un numero")
+    elif comando == DIVULGAR:
+        if parametros[2].isdigit():
+            print("############################################################")
+            print("empieza divulgar")
+            print("############################################################")
+            comandos.divulgar_rumor(grafo ,parametros[1] ,parametros[2])
+        else:
+            print("el parametro ",parametros[2],"no es un numero")
+
+    elif comando == DIVULGAR_CICLO:
+        if parametro[2].isdigit():
+            print("############################################################")
+            print("empieza divulgar_ciclo")
+            print("############################################################")
+            comandos.divulgar_ciclo_n(grafo ,parametros[1] ,parametros[2])
+        else:
+            print("el parametro ",parametros[2],"no es un numero")
+    elif comando == COM_FUERT_CONEXAS:      
+        print("############################################################")
+        print("empieza cfc")
+        print("############################################################")
         comandos.componentes_fuert_conex(grafo)
     
 def realizar_comandos(graf):
-    archivo = "stdin"
-    for linea in archivo:
+    
+    for linea in sys.stdin:
         linea = procesar_linea(" ", linea)
         ejecutar_comando(linea[0],graf, linea)
 
 def main():
-    print("hola")
     nom_archivo = sys.argv[1]
-    print("matu")
-            #archivo = open(nom_archivo, 'r')
-    graf = grafo.Grafo()  #crea el grafo
+    graf = grafo.Grafo() 
     with open(nom_archivo) as archivo:
         print(archivo)
         cargar_vertices(archivo, graf)
