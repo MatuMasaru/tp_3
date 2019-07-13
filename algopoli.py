@@ -95,6 +95,4 @@ def main():
     if len(graf):
         realizar_comandos(graf)
 
-
-
-
+main()
