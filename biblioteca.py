@@ -123,34 +123,34 @@ def radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados):
 
 def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
     visitados.append(v)
-    s.deque(v)
-    p.deque(v)
+    s.append(v)
+    p.append(v)
     for w in grafo.adyacentes(v):
         if w not in visitados:
             orden[w] = orden[v] + 1
             dfs_cfc(grafo, w, visitados, orden, p, s, cfcs, en_cfs)
         elif w not in en_cfs:
-            while orden[p(-1)] > orden[w]:
+            while orden[p[-1]] > orden[w]:
                 p.pop()
 
-    if p(-1) == v:
+    if p[-1] == v:
         p.pop()
         z = None
         nueva_cfc = []
-    while z != v:
-        z = s.desapilar()
-        en_cfs.agregar(z)
-        nueva_cfc.append(z)
-        cfcs.append(nueva_cfc)
+        while z != v:
+            z = s.pop()
+            en_cfs.append(z)
+            nueva_cfc.append(z)
+            cfcs.append(nueva_cfc)
 
 def cfc(grafo):
-    visitados = set()
+    visitados = []
     orden = {}
-    pila_p = collections.deque()
-    pila_s = collections.deque()
+    pila_p = []
+    pila_s = []
     cfcs = []
-    en_cfs = set()
-    for v in grafo:
+    en_cfs = []
+    for v in grafo.vertices:
         if v not in visitados:
             orden[v] = 0
             dfs_cfc(grafo, v, visitados, orden, pila_p, pila_s, cfcs, en_cfs)
