@@ -6,7 +6,7 @@ LABEL_ITERACIONES = 100
 
 def imprimir_lista(lista, separador):
 
-    print(lista.join(separador))
+    print(separador.join(lista))
 
 def camino_minimo_bfs(grafo, origen):
     """devuelve dos diccionarios uno de ordenes y otro de dependencias(padres) """

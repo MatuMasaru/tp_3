@@ -11,13 +11,16 @@ def enlistar_recorrido(lista , destino , padres):
         return
     enlistar_recorrido(lista, padres[destino],padres)
     lista.append(destino)
+    
 
 def minimo_seguimiento( grafo, origen , destino ):
     """imprime el minimo seguimiento desde origen, hasta destino, de no poder realizarse imprime 'Seguimiento imposible'"""
     padres, vertice = biblioteca.minimos_seguimientos_hasta_destino( grafo, origen , destino )
-    if vertice:
+    print("diccionario de padres ",padres)
+    if destino in vertice :
         lista = []
         enlistar_recorrido(lista,destino, padres)
+        print("imprimir la lista enlistada")
         biblioteca.imprimir_lista(lista, SEPARACION_FLECHA)
     else :
         print("Seguimiento imposible")
