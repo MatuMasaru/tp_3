@@ -103,9 +103,12 @@ def mostrar_comunidades( grafo , n):
     imprimir_comunidades( comunidades , volumen_comunidad , n)
 
 def divulgar_rumor(grafo ,delicuente ,saltos):
-    visitados = set()
+    visitados = []
     contador = 0
-    biblioteca.radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados) 
+    if saltos == 1:
+        visitados = grafo.adyacentes(delicuente)
+    else:
+        biblioteca.radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados) 
     biblioteca.imprimir_lista(visitados ,SEPARACION_COMA)
 
 def hay_ciclo(grafo, vertice, saltos , recorrido, contador , origen):

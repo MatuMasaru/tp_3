@@ -113,13 +113,13 @@ def label_propagation( grafo ):
 def radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados):
     visitados.append(delicuente)
     for w in grafo.adyacentes(delicuente):
-        if ((w is not visitados) and (contador < saltos)):
+        if (( not w in visitados) and (contador < saltos)):
             contador += 1
-            radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados)
+            radio_rumor(grafo ,w ,saltos ,contador ,visitados)
             contador -= 1
 
 def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
-    visitados.agregar(v)
+    visitados.append(v)
     s.deque(v)
     p.deque(v)
     for w in grafo.adyacentes(v):
