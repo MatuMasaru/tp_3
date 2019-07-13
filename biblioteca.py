@@ -65,24 +65,27 @@ def ordenar_vertices(grafo, distancia):# aplicar counting sort. para la centrali
 
 def betweeness_centrality(grafo):
     cent = {}
-    for v in grafo: cent[v] = 0
-    for v in grafo:
+    for i in grafo.vertices: cent[i] = 0
+    for v in grafo.vertices:
         # hacia todos los demas vertices
         distancia, padre = camino_minimo_bfs(grafo, v)          #aplicar camino minimo
 
         cent_aux = {}
-        for w in grafo: cent_aux[w] = 0
+        for w in grafo.vertices: cent_aux[w] = 0
         # Aca filtramos (de ser necesario) los vertices a distancia infinita, 
         # y ordenamos de mayor a menor
         vertices_ordenados = ordenar_vertices(grafo, distancia) 
-
+       
         for w in vertices_ordenados:
-            cent_aux[padre[w]] += 1 + cent_aux[w]
+            if padre[w[0]] !=None:
+                cent_aux[padre[w[0]]] += 1 + cent_aux[w[0]]
         # le sumamos 1 a la centralidad de todos los vertices que se encuentren en 
         # el medio del camino
-        for w in grafo:
+       
+        for w in grafo.vertices:
             if w == v: continue
             cent[w] += cent_aux[w]
+
     return cent
 
 def max_freq(adyacentes, label):
