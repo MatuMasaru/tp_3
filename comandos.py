@@ -78,7 +78,6 @@ def persecucion_rapida(grafo ,parametros, k ):
     biblioteca.imprimir_lista(lista_a_imprimir, SEPARACION_FLECHA)
 
 
-
 def filtrar_comunidades( label , integrantes ):
     aux_comunidades = {}
     for j in label:
