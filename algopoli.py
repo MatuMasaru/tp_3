@@ -25,6 +25,7 @@ def cargar_vertices(archivo, grafo):
         grafo.agregar_arista(vertices[0],vertices[1])
 
 def ejecutar_comando(comando, grafo, parametros):
+    numero = 0
     if (comando == MIN_SEGUIMIENTOS):
         print("############################################################")
         print("empieza min_segimiento")
@@ -35,14 +36,16 @@ def ejecutar_comando(comando, grafo, parametros):
             print("############################################################")
             print("empieza mas_importantes")
             print("############################################################")
-            comandos.mas_importantes(grafo,int(parametros[1]) )
+            numero = int(parametros[1]) 
+            comandos.mas_importantes(grafo,numero )
         else:
             print("el parametro ",parametros[1],"no es un numero")
     elif comando == PERSECUCION:
         if parametros[2].isdigit():
             print("empieza persecucion")
             print("############################################################")
-            comandos.persecucion_rapida(grafo ,(parametros[1]).split(','), parametros[2] )
+            numero = int(parametros[2])
+            comandos.persecucion_rapida(grafo ,(parametros[1]).split(','), numero)
         else:
             print("el parametro ",parametros[2],"no es un numero")
     elif comando == COMUNIDADES:
@@ -50,7 +53,8 @@ def ejecutar_comando(comando, grafo, parametros):
             print("############################################################")
             print("empieza comunidades")
             print("############################################################")
-            comandos.mostrar_comunidades(grafo,parametros[1])
+            numero = int (parametros[1])
+            comandos.mostrar_comunidades(grafo, numero)
         else:
             print("el parametro ",parametros[1],"no es un numero")
     elif comando == DIVULGAR:
@@ -58,12 +62,12 @@ def ejecutar_comando(comando, grafo, parametros):
             print("############################################################")
             print("empieza divulgar")
             print("############################################################")
-            comandos.divulgar_rumor(grafo ,parametros[1] ,parametros[2])
+            numero = int(parametros[2])
+            comandos.divulgar_rumor(grafo ,parametros[1] , numero )
         else:
             print("el parametro ",parametros[2],"no es un numero")
-
     elif comando == DIVULGAR_CICLO:
-        if parametro[2].isdigit():
+        if parametros[2].isdigit():
             print("############################################################")
             print("empieza divulgar_ciclo")
             print("############################################################")

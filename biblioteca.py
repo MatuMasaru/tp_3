@@ -105,7 +105,7 @@ def label_propagation( grafo ):
     for v in grafo.vertices:
         label[v]= contador
         contador += 1
-    vertices = label.keys()
+    vertices = list(label.keys())
 
     for j in range(LABEL_ITERACIONES):
         random.shuffle(vertices)
