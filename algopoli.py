@@ -3,7 +3,7 @@ import grafo
 import sys
 import comandos
 
-MIN_SEGUIMIENTOS = "min_segimientos"
+MIN_SEGUIMIENTOS = "min_seguimientos"
 MAS_IMPORTARNTES = "mas_imp"
 PERSECUCION = "persecucion"
 COMUNIDADES = "comunidades"
@@ -18,7 +18,6 @@ def procesar_linea(separador,linea):
 def cargar_vertices(archivo, grafo):
     for linea in archivo :
         vertices = procesar_linea('\t',linea)
-        print(vertices)
         for i in vertices:
             if not grafo.vertice_pertenece(i):
                 grafo.agregar_vertice(i)
@@ -90,7 +89,6 @@ def main():
     nom_archivo = sys.argv[1]
     graf = grafo.Grafo() 
     with open(nom_archivo) as archivo:
-        print(archivo)
         cargar_vertices(archivo, graf)
     if len(graf):
         realizar_comandos(graf)

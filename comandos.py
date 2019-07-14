@@ -2,6 +2,7 @@ import grafo
 import random
 import biblioteca
 import copy
+import collections
 
 SEPARACION_FLECHA = " -> "
 SEPARACION_COMA = ", "
@@ -12,15 +13,12 @@ def enlistar_recorrido(lista , destino , padres):
     enlistar_recorrido(lista, padres[destino],padres)
     lista.append(destino)
     
-
 def minimo_seguimiento( grafo, origen , destino ):
     """imprime el minimo seguimiento desde origen, hasta destino, de no poder realizarse imprime 'Seguimiento imposible'"""
     padres, vertice = biblioteca.minimos_seguimientos_hasta_destino( grafo, origen , destino )
-    print("diccionario de padres ",padres)
     if destino in vertice :
         lista = []
         enlistar_recorrido(lista,destino, padres)
-        print("imprimir la lista enlistada")
         biblioteca.imprimir_lista(lista, SEPARACION_FLECHA)
     else :
         print("Seguimiento imposible")
@@ -70,8 +68,7 @@ def persecucion_rapida(grafo ,parametros, k ):
     
     lista_a_imprimir=[]
     enlistar_recorrido(lista_a_imprimir, vertice_max[0] , recorridos_delincuentes)
-    biblioteca.imprimir_lista(lista_a_imprimir, SEPARACION_FLECHA)
-
+    biblioteca.imprimir_lista(lista_a_imprimir, SEPARACION_COMA)
 
 def filtrar_comunidades( label , integrantes ):
     aux_comunidades = {}
@@ -119,20 +116,17 @@ def hay_ciclo(grafo, vertice, saltos , recorrido, contador , origen):
     return False
 
 def divulgar_ciclo_n(grafo , delincuente, saltos):
-    recorrido= []
-    contador = 0 
-    if hay_ciclo(grafo, delincuente, saltos, recorrido , contador ,delincuente):
+    recorrido = []
+    contador = 0
+    if hay_ciclo(grafo, delincuente, saltos, recorrido,contador,  delincuente ):
         biblioteca.imprimir_lista(recorrido, SEPARACION_FLECHA)
     else:
          print("No se encontro recorrido")   
-
 
 def componentes_fuert_conex(grafo):
     conjuntos = biblioteca.cfc(grafo)
     contador = 1
     for c in conjuntos:
-        print("CFC " + str(contador) + ":",end = '')
-        biblioteca.imprimir_lista(c ,SEPARACION_COMA)
-
-
+        print("CFC {}: {}".format(contador,SEPARACION_COMA.join(c)))
+        contador +=1
 

@@ -40,23 +40,23 @@ def minimos_seguimientos_hasta_destino(grafo, origen ,destino):
     cola = collections.deque()
 
     visitados.add(origen)
-
     orden[origen] = 0
     padres[origen] = None
 
     cola.append(origen)
     while cola:
-
         v = cola.popleft()
-
         for w in grafo.adyacentes( v ):
-            if w not in visitados:
+           # print("los adyacentes de ",v ,":",grafo.adyacentes(v))
+            if not w in visitados:
                 visitados.add(w)
                 padres[w] = v   #esto busca por bfs al destino y si encuentra corta y lo pone como visitado.
                 orden[w] = orden[v] + 1
+                #print (w,destino)
                 if w in destino:
                     return padres,orden 
                 cola.append(w)
+                #print("imprimo cola",cola)
     return padres,orden 
 
 def ordenar_vertices(grafo, distancia):# aplicar counting sort. para la centralidad.
@@ -122,14 +122,14 @@ def radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados):
             contador -= 1
 
 def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
-    visitados.append(v)
+    visitados.add(v)
     s.append(v)
     p.append(v)
     for w in grafo.adyacentes(v):
         if w not in visitados:
             orden[w] = orden[v] + 1
             dfs_cfc(grafo, w, visitados, orden, p, s, cfcs, en_cfs)
-        elif w not in en_cfs:
+        elif not w in en_cfs:
             while orden[p[-1]] > orden[w]:
                 p.pop()
 
@@ -141,10 +141,10 @@ def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
             z = s.pop()
             en_cfs.append(z)
             nueva_cfc.append(z)
-            cfcs.append(nueva_cfc)
+        cfcs.append(nueva_cfc)
 
 def cfc(grafo):
-    visitados = []
+    visitados = set()
     orden = {}
     pila_p = []
     pila_s = []

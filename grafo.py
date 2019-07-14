@@ -40,7 +40,7 @@ class Grafo:
 
     def agregar_arista(self, salida_vertice, entrada_vertice, peso=1):
         if not self.esta_conectado(salida_vertice, entrada_vertice):
-            self.vertices[entrada_vertice][salida_vertice] = peso
+            self.vertices[salida_vertice][entrada_vertice] = peso
             return True
         return False
 
