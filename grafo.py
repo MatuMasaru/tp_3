@@ -46,11 +46,11 @@ class Grafo:
 
     def remover_arista(self, vertice_1, vertice_2): #deberia devolverse la arista
         if not self.esta_conectado(vertice_1, vertice_2): #si no esta no se remueve
-            self.vertices[vertice_1].pop(vertice_2)   #sacar arista y devolverlo 
+            self.vertices[vertice_1].pop(vertice_2)   #sacar arista y devolverlo
 
-    def obtener_vertices(self):
-        return self.vertices.keys()
+    def vertices(self):
+        return list(self.vertices.keys())
+
 
     def __len__(self):
         return self.numero_vertices
-

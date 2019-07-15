@@ -49,9 +49,6 @@ def ejecutar_comando(comando, grafo, parametros):
             print("el parametro ",parametros[2],"no es un numero")
     elif comando == DIVULGAR_CICLO:
         if parametros[2].isdigit():
-            print("############################################################")
-            print("empieza divulgar_ciclo")
-            print("############################################################")
             comandos.divulgar_ciclo_n(grafo ,parametros[1] ,parametros[2])
         else:
             print("el parametro ",parametros[2],"no es un numero")

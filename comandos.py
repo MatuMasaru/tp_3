@@ -26,7 +26,7 @@ def minimo_seguimiento( grafo, origen , destino ):
 
 def k_mas_importantes(grafo,k):
     """devuelve una lista con los k elementos mas importantes del grafo(delincuentes)"""
-    centralidad = biblioteca.betweeness_centrality(grafo)
+    centralidad = biblioteca.random_walk(grafo)
     lista = list(sorted(centralidad.items(), key = lambda x:x[1], reverse = True))
     lista_aux = []
     for j in range( k ):

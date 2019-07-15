@@ -1,19 +1,19 @@
-min_seguimientos a f
-min_seguimientos a c
-divulgar_ciclo a 0
-divulgar_ciclo a 1
-divulgar_ciclo a 2
-divulgar_ciclo a 3
-divulgar_ciclo a 4
-divulgar a 0
-divulgar a 1
-divulgar a 2
-divulgar a 3
-divulgar a 4
-mas_imp 5
-mas_imp 4
-mas_imp 2
-persecucion a,b 2
-persecucion a 3
-comunidades 2
+min_seguimientos 1 3
+min_seguimientos 3 9
+divulgar_ciclo 1 0
+divulgar_ciclo 1 1
+divulgar_ciclo 1 2
+divulgar_ciclo 1 3
+divulgar_ciclo 1 4
+divulgar 1 0
+divulgar 1 1
+divulgar 1 2
+divulgar 1 3
+divulgar 1 4
+mas_imp 30
+mas_imp 20
+mas_imp 10
+persecucion 1,7 55
+persecucion 45,13,31 3
+comunidades 7
 cfc

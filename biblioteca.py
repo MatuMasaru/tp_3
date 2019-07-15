@@ -2,8 +2,8 @@ import grafo
 import random
 import collections
 
-LABEL_ITERACIONES = 1500
-
+LARGO_RECORRIDO = 1000
+LABEL_ITERACIONES= 1000
 def imprimir_lista(lista, separador):
 
     print(separador.join(lista))
@@ -58,9 +58,39 @@ def ordenar_vertices(grafo, distancia):
     """devuelve un iterable  ordenado de mayor a menor  en funcion del valor del dict distancia"""
     return list(sorted(distancia.items(),key = lambda x:x[1] , reverse = True ))
 
-def betweeness_centrality(grafo):
+def random_walk(grafo):
+
+    apariciones = {}
+    lista_vertices = list(grafo.vertices.keys())
+    #print("lista vertices claves",lista_vertices)
+
+    for w in lista_vertices :
+        apariciones[w]= 0
+    cantidad_vertices = len(grafo)
+
+    for j in range (0, LARGO_RECORRIDO):
+        vertice_origen = random.choice(lista_vertices)
+        apariciones[vertice_origen] +=1
+        contador = 0
+        for i in range(0, cantidad_vertices +contador):
+            if not grafo.adyacentes(vertice_origen):
+                contador = cantidad_vertices -1
+                continue
+            vertice_origen = random.choice(list(grafo.adyacentes(vertice_origen)))
+            apariciones[vertice_origen] += 1
+
+            if i == (cantidad_vertices + contador -1 ):
+                contador = 0
+    return apariciones
+"""def betweeness_centrality(grafo):
     cent = {}
-    for i in grafo.vertices: cent[i] = 0
+    lista_vertices = []
+    for i in grafo.vertices:
+        cent[i] = 0
+        lista_vertices.append(i)
+
+    random.shuffle(lista_vertices)
+    print ("vertices aleatorios:", lista_vertices)
     for v in grafo.vertices:
         # hacia todos los demas vertices
         distancia, padre = camino_minimo_bfs(grafo, v)          #aplicar camino minimo
@@ -80,7 +110,7 @@ def betweeness_centrality(grafo):
         for w in grafo.vertices:
             if w == v: continue
             cent[w] += cent_aux[w]
-    return cent
+    return cent"""
 
 def max_freq(adyacentes, label):
     dict_recurrencia = {}
@@ -116,7 +146,6 @@ def radio_rumor(grafo ,delicuente ,saltos ,contador , visitados, imprimir):
             visitados.append(w)
             radio_rumor(grafo ,w ,saltos ,contador+1 ,visitados, imprimir)
             visitados.pop()
-
 
 def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
     visitados.add(v)
