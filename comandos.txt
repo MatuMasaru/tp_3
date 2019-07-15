@@ -1,4 +1,5 @@
-
+min_seguimientos a f
+min_seguimientos a c
 divulgar_ciclo a 0
 divulgar_ciclo a 1
 divulgar_ciclo a 2
@@ -9,3 +10,10 @@ divulgar a 1
 divulgar a 2
 divulgar a 3
 divulgar a 4
+mas_imp 5
+mas_imp 4
+mas_imp 2
+persecucion a,b 2
+persecucion a 3
+comunidades 2
+cfc

@@ -2,7 +2,7 @@ import grafo
 import random
 import collections
 
-LABEL_ITERACIONES = 100
+LABEL_ITERACIONES = 1500
 
 def imprimir_lista(lista, separador):
 
@@ -36,13 +36,11 @@ def minimos_seguimientos_hasta_destino(grafo, origen ,destino):
         devuelve el diccionario pero 'destino' no estara en el diccionario"""
     padres={}
     visitados=set()
-    orden = {}
     cola = collections.deque()
-
+    orden= {}
     visitados.add(origen)
-    orden[origen] = 0
     padres[origen] = None
-
+    orden [origen] = 0
     cola.append(origen)
     while cola:
         vertice = cola.popleft()
@@ -50,13 +48,13 @@ def minimos_seguimientos_hasta_destino(grafo, origen ,destino):
             if not adyacente in visitados:
                 visitados.add(adyacente)
                 padres[adyacente] = vertice  #esto busca por bfs al destino y si encuentra corta y lo pone como visitado.
-                orden[adyacente] = orden[vertice] + 1
-                if adyacente in destino:
+                orden[adyacente] =orden[vertice] + 1
+                if adyacente == destino:
                     return padres,orden
                 cola.append(adyacente)
-    return padres,orden
+    return padres, orden
 
-def ordenar_vertices(grafo, distancia):# aplicar counting sort. para la centralidad.
+def ordenar_vertices(grafo, distancia):
     """devuelve un iterable  ordenado de mayor a menor  en funcion del valor del dict distancia"""
     return list(sorted(distancia.items(),key = lambda x:x[1] , reverse = True ))
 
@@ -108,14 +106,16 @@ def label_propagation( grafo ):
             label[i] = max_freq(grafo.adyacentes(i), label)
     return label
 
-def radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados):
-    if (contador != saltos):
-        for w in grafo.adyacentes(delicuente):
-            if  not w in visitados:
-                visitados.append(w)
-                radio_rumor(grafo ,w ,saltos ,contador+1 ,visitados)
-            else:
-                radio_rumor(grafo ,w ,saltos ,contador+1 ,visitados)
+def radio_rumor(grafo ,delicuente ,saltos ,contador , visitados, imprimir):
+    if (contador == saltos):
+        return
+    for w in grafo.adyacentes(delicuente):
+        if ( not w in imprimir):
+            imprimir.append(w)
+        if  not w in visitados:
+            visitados.append(w)
+            radio_rumor(grafo ,w ,saltos ,contador+1 ,visitados, imprimir)
+            visitados.pop()
 
 
 def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):

@@ -15,6 +15,7 @@ def enlistar_recorrido(lista , destino , padres):
 
 def minimo_seguimiento( grafo, origen , destino ):
     """imprime el minimo seguimiento desde origen, hasta destino, de no poder realizarse imprime 'Seguimiento imposible'"""
+    #print("minimo_seguimiento")
     padres, ordenes = biblioteca.minimos_seguimientos_hasta_destino( grafo, origen , destino )
     if destino in padres :
         lista = []
@@ -30,11 +31,11 @@ def k_mas_importantes(grafo,k):
     lista_aux = []
     for j in range( k ):
        lista_aux.append(lista[j][0])
-
     return lista_aux
 
 def mas_importantes(grafo, cant ):
     """ Imprime, de mayor a menor importancia, los cant delincuentes más importantes."""
+    #print("mas_importantes")
     #Betweeness Centrality, aproximado.   o    PageRank.  se usa cualquiera dentro de este
     lista_importantes = k_mas_importantes( grafo, int(cant) )
     biblioteca.imprimir_lista(lista_importantes,SEPARACION_COMA)
@@ -44,6 +45,7 @@ def persecucion_rapida(grafo ,parametros, k ):
     obtener cuál es el camino más corto para llegar desde alguno de los delincuentes pasados por parámetro,
     a alguno de los K delincuentes más importantes.
     En caso de tener caminos de igual largo, priorizar los que vayan a un delincuente más importante."""
+    #print("persecucion_rapida")
     lista_importantes = k_mas_importantes( grafo, int(k) )
     delincuentes = parametros
     recorridos_delincuentes ={}
@@ -91,19 +93,21 @@ def imprimir_comunidades(comunidades,  volumen_comunidades, tamanio_minimo):
 
 def mostrar_comunidades( grafo , n):
     """ imprime en pantalla las comunidades de minimo n elementos en ellos"""
+    #print("comunidades")
     volumen_comunidad ={}
     comunidades  = filtrar_comunidades( biblioteca.label_propagation( grafo ) , volumen_comunidad )
     imprimir_comunidades( comunidades , volumen_comunidad , int(n))
 
-def divulgar_rumor(grafo ,delicuente ,saltos):
+def divulgar_rumor(grafo ,delincuente ,saltos):
+    #print("divulgar_rumor")
     visitados = collections.deque()
     contador = 0
-    print("caso {}".format(saltos))
-    visitados.append(delicuente)
-
-    biblioteca.radio_rumor(grafo ,delicuente ,int(saltos) ,contador ,visitados)
-    visitados.popleft()
-    biblioteca.imprimir_lista(visitados ,SEPARACION_COMA)
+    imprimir = collections.deque()
+    visitados.append(delincuente)
+    imprimir.append(delincuente)
+    biblioteca.radio_rumor(grafo ,delincuente ,int(saltos) ,contador ,visitados, imprimir)
+    imprimir.popleft()
+    biblioteca.imprimir_lista(imprimir ,SEPARACION_COMA)
 
 def hay_ciclo(grafo, vertice, saltos , recorrido, contador , origen):
     if (contador==saltos):
@@ -124,6 +128,7 @@ def hay_ciclo(grafo, vertice, saltos , recorrido, contador , origen):
     return False
 
 def divulgar_ciclo_n(grafo , delincuente, saltos):
+    #print("divulgar_ciclo")
     recorrido = []
     contador = 0
     if hay_ciclo(grafo, delincuente, int(saltos), recorrido,contador,  delincuente ):
@@ -132,6 +137,7 @@ def divulgar_ciclo_n(grafo , delincuente, saltos):
          print("No se encontro recorrido")
 
 def componentes_fuert_conex(grafo):
+    #print("componentes_fuert_conex")
     conjuntos = biblioteca.cfc(grafo)
     contador = 1
     for c in conjuntos:
