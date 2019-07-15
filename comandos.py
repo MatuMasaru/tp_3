@@ -12,7 +12,7 @@ def enlistar_recorrido(lista , destino , padres):
         return
     enlistar_recorrido(lista, padres[destino],padres)
     lista.append(destino)
-    
+
 def minimo_seguimiento( grafo, origen , destino ):
     """imprime el minimo seguimiento desde origen, hasta destino, de no poder realizarse imprime 'Seguimiento imposible'"""
     padres, vertice = biblioteca.minimos_seguimientos_hasta_destino( grafo, origen , destino )
@@ -36,12 +36,12 @@ def k_mas_importantes(grafo,k):
 def mas_importantes(grafo, cant ):
     """ Imprime, de mayor a menor importancia, los cant delincuentes más importantes."""
     #Betweeness Centrality, aproximado.   o    PageRank.  se usa cualquiera dentro de este
-    lista_importantes = k_mas_importantes( grafo, cant )
+    lista_importantes = k_mas_importantes( grafo, int(cant) )
     biblioteca.imprimir_lista(lista_importantes,SEPARACION_COMA)
 
 def persecucion_rapida(grafo ,parametros, k ):
-    """Dado cada uno de los delincuentes pasados (agentes encubiertos), 
-    obtener cuál es el camino más corto para llegar desde alguno de los delincuentes pasados por parámetro, 
+    """Dado cada uno de los delincuentes pasados (agentes encubiertos),
+    obtener cuál es el camino más corto para llegar desde alguno de los delincuentes pasados por parámetro,
     a alguno de los K delincuentes más importantes.
     En caso de tener caminos de igual largo, priorizar los que vayan a un delincuente más importante."""
     lista_importantes = k_mas_importantes( grafo, int(k) )
@@ -65,14 +65,14 @@ def persecucion_rapida(grafo ,parametros, k ):
             elif (vertice_max[1] == distancias[vertice])and (lista_importantes.index(vertice_max[0])>lista_importantes.index(vertice_max[0])):
                 recorridos_delincuentes = copy.copy(padres)
                 vertice_max = ( vertice , distancias[vertice] )
-    
+
     lista_a_imprimir=[]
     enlistar_recorrido(lista_a_imprimir, vertice_max[0] , recorridos_delincuentes)
     biblioteca.imprimir_lista(lista_a_imprimir, SEPARACION_COMA)
 
 def filtrar_comunidades( label , integrantes ):
     aux_comunidades = {}
-    
+
     for j in label:
         if label[j] in integrantes:
             integrantes[ label[j ] ] +=1
@@ -81,7 +81,7 @@ def filtrar_comunidades( label , integrantes ):
             aux_comunidades[  label[ j ] ] = []
         aux_comunidades[  label[ j ] ].append(j)
     return aux_comunidades
-        
+
 def imprimir_comunidades(comunidades,  volumen_comunidades, tamanio_minimo):
     contador = 1
     for j in volumen_comunidades.items():
@@ -98,30 +98,33 @@ def mostrar_comunidades( grafo , n):
 def divulgar_rumor(grafo ,delicuente ,saltos):
     visitados = []
     contador = 0
-    biblioteca.radio_rumor(grafo ,delicuente ,int(saltos) ,contador ,visitados) 
+    biblioteca.radio_rumor(grafo ,delicuente ,int(saltos) ,contador ,visitados)
     biblioteca.imprimir_lista(visitados ,SEPARACION_COMA)
 
 def hay_ciclo(grafo, vertice, saltos , recorrido, contador , origen):
-    if contador == saltos:
+    if (contador==saltos):
         if origen == vertice:
             recorrido.append(vertice)
             return True
         else:
             return False
+    if vertice in recorrido:
+        return False
+
+    recorrido.append(vertice)
     for j in grafo.adyacentes(vertice):
-        recorrido.append(vertice)
         if hay_ciclo(grafo, j , saltos , recorrido, contador+1, origen):
             return True
-        recorrido.pop()
+    recorrido.pop()
     return False
 
 def divulgar_ciclo_n(grafo , delincuente, saltos):
     recorrido = []
     contador = 0
-    if hay_ciclo(grafo, delincuente, saltos, recorrido,contador,  delincuente ):
+    if hay_ciclo(grafo, delincuente, int(saltos), recorrido,contador,  delincuente ):
         biblioteca.imprimir_lista(recorrido, SEPARACION_FLECHA)
     else:
-         print("No se encontro recorrido")   
+         print("No se encontro recorrido")
 
 def componentes_fuert_conex(grafo):
     conjuntos = biblioteca.cfc(grafo)
@@ -129,4 +132,3 @@ def componentes_fuert_conex(grafo):
     for c in conjuntos:
         print("CFC {}: {}".format(contador,SEPARACION_COMA.join(c)))
         contador +=1
-

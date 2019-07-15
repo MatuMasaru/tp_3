@@ -1,7 +1,6 @@
-mas_imp 3
-persecucion 1,5 5
-persecucion 6 3
-comunidades 2
-cfc
-min_seguimientos 1 6
-min_seguimientos 1 5
+
+divulgar_ciclo a 0
+divulgar_ciclo a 1
+divulgar_ciclo a 2
+divulgar_ciclo a 3
+divulgar_ciclo a 4
