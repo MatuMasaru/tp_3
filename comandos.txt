@@ -4,3 +4,8 @@ divulgar_ciclo a 1
 divulgar_ciclo a 2
 divulgar_ciclo a 3
 divulgar_ciclo a 4
+divulgar a 0
+divulgar a 1
+divulgar a 2
+divulgar a 3
+divulgar a 4

@@ -47,17 +47,14 @@ def minimos_seguimientos_hasta_destino(grafo, origen ,destino):
     while cola:
         v = cola.popleft()
         for w in grafo.adyacentes( v ):
-           # print("los adyacentes de ",v ,":",grafo.adyacentes(v))
             if not w in visitados:
                 visitados.add(w)
                 padres[w] = v   #esto busca por bfs al destino y si encuentra corta y lo pone como visitado.
                 orden[w] = orden[v] + 1
-                #print (w,destino)
                 if w in destino:
-                    return padres,orden 
+                    return padres,orden
                 cola.append(w)
-                #print("imprimo cola",cola)
-    return padres,orden 
+    return padres,orden
 
 def ordenar_vertices(grafo, distancia):# aplicar counting sort. para la centralidad.
     """devuelve un iterable  ordenado de mayor a menor  en funcion del valor del dict distancia"""
@@ -72,16 +69,16 @@ def betweeness_centrality(grafo):
 
         cent_aux = {}
         for w in grafo.vertices: cent_aux[w] = 0
-        # Aca filtramos (de ser necesario) los vertices a distancia infinita, 
+        # Aca filtramos (de ser necesario) los vertices a distancia infinita,
         # y ordenamos de mayor a menor
-        vertices_ordenados = ordenar_vertices(grafo, distancia) 
-       
+        vertices_ordenados = ordenar_vertices(grafo, distancia)
+
         for w in vertices_ordenados:
             if padre[w[0]] !=None:
                 cent_aux[padre[w[0]]] += 1 + cent_aux[w[0]]
-        # le sumamos 1 a la centralidad de todos los vertices que se encuentren en 
+        # le sumamos 1 a la centralidad de todos los vertices que se encuentren en
         # el medio del camino
-       
+
         for w in grafo.vertices:
             if w == v: continue
             cent[w] += cent_aux[w]
@@ -114,12 +111,15 @@ def label_propagation( grafo ):
     return label
 
 def radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados):
-    visitados.append(delicuente)
-    for w in grafo.adyacentes(delicuente):
-        if (( not w in visitados) and (contador < saltos)):
-            contador += 1
-            radio_rumor(grafo ,w ,saltos ,contador ,visitados)
-            contador -= 1
+    if (contador != saltos):
+        #print("ingresa comparacion{}".format(contador))
+        for w in grafo.adyacentes(delicuente):
+            if  not w in visitados:
+                visitados.append(w)
+                radio_rumor(grafo ,w ,saltos ,contador+1 ,visitados)
+            else:
+                radio_rumor(grafo ,w ,saltos ,contador+1 ,visitados)
+
 
 def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
     visitados.add(v)

@@ -15,8 +15,8 @@ def enlistar_recorrido(lista , destino , padres):
 
 def minimo_seguimiento( grafo, origen , destino ):
     """imprime el minimo seguimiento desde origen, hasta destino, de no poder realizarse imprime 'Seguimiento imposible'"""
-    padres, vertice = biblioteca.minimos_seguimientos_hasta_destino( grafo, origen , destino )
-    if destino in vertice :
+    padres, ordenes = biblioteca.minimos_seguimientos_hasta_destino( grafo, origen , destino )
+    if destino in padres :
         lista = []
         enlistar_recorrido(lista,destino, padres)
         biblioteca.imprimir_lista(lista, SEPARACION_FLECHA)
@@ -96,9 +96,13 @@ def mostrar_comunidades( grafo , n):
     imprimir_comunidades( comunidades , volumen_comunidad , int(n))
 
 def divulgar_rumor(grafo ,delicuente ,saltos):
-    visitados = []
+    visitados = collections.deque()
     contador = 0
+    print("caso {}".format(saltos))
+    visitados.append(delicuente)
+
     biblioteca.radio_rumor(grafo ,delicuente ,int(saltos) ,contador ,visitados)
+    visitados.popleft()
     biblioteca.imprimir_lista(visitados ,SEPARACION_COMA)
 
 def hay_ciclo(grafo, vertice, saltos , recorrido, contador , origen):
@@ -108,6 +112,7 @@ def hay_ciclo(grafo, vertice, saltos , recorrido, contador , origen):
             return True
         else:
             return False
+
     if vertice in recorrido:
         return False
 
