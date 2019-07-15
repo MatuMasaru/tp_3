@@ -45,15 +45,15 @@ def minimos_seguimientos_hasta_destino(grafo, origen ,destino):
 
     cola.append(origen)
     while cola:
-        v = cola.popleft()
-        for w in grafo.adyacentes( v ):
-            if not w in visitados:
-                visitados.add(w)
-                padres[w] = v   #esto busca por bfs al destino y si encuentra corta y lo pone como visitado.
-                orden[w] = orden[v] + 1
-                if w in destino:
+        vertice = cola.popleft()
+        for adyacente in grafo.adyacentes( vertice ):
+            if not adyacente in visitados:
+                visitados.add(adyacente)
+                padres[adyacente] = vertice  #esto busca por bfs al destino y si encuentra corta y lo pone como visitado.
+                orden[adyacente] = orden[vertice] + 1
+                if adyacente in destino:
                     return padres,orden
-                cola.append(w)
+                cola.append(adyacente)
     return padres,orden
 
 def ordenar_vertices(grafo, distancia):# aplicar counting sort. para la centralidad.
@@ -82,7 +82,6 @@ def betweeness_centrality(grafo):
         for w in grafo.vertices:
             if w == v: continue
             cent[w] += cent_aux[w]
-
     return cent
 
 def max_freq(adyacentes, label):
@@ -94,7 +93,6 @@ def max_freq(adyacentes, label):
             dict_recurrencia[ label [j] ] += 1
     maximo = max(dict_recurrencia.items(), key = lambda x:x[1] )
     return maximo[0]
-
 
 def label_propagation( grafo ):
     label = {}
@@ -112,7 +110,6 @@ def label_propagation( grafo ):
 
 def radio_rumor(grafo ,delicuente ,saltos ,contador ,visitados):
     if (contador != saltos):
-        #print("ingresa comparacion{}".format(contador))
         for w in grafo.adyacentes(delicuente):
             if  not w in visitados:
                 visitados.append(w)
