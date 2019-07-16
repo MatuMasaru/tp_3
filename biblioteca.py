@@ -44,7 +44,7 @@ def minimos_seguimientos_hasta_destino(grafo, origen ,destino):
     cola.append(origen)
     while cola:
         vertice = cola.popleft()
-        for adyacente in grafo.adyacentes( vertice ):
+        for adyacente in grafo.adyacentes(vertice):
             if not adyacente in visitados:
                 visitados.add(adyacente)
                 padres[adyacente] = vertice  #esto busca por bfs al destino y si encuentra corta y lo pone como visitado.
@@ -136,16 +136,23 @@ def label_propagation( grafo ):
             label[i] = max_freq(grafo.adyacentes(i), label)
     return label
 
-def radio_rumor(grafo ,delicuente ,saltos ,contador , visitados, imprimir):
-    if (contador == saltos):
-        return
-    for w in grafo.adyacentes(delicuente):
-        if ( not w in imprimir):
-            imprimir.append(w)
-        if  not w in visitados:
-            visitados.append(w)
-            radio_rumor(grafo ,w ,saltos ,contador+1 ,visitados, imprimir)
-            visitados.pop()
+def radio_rumor(grafo, delicuente ,saltos):
+    visitados = set()
+    orden = {}
+    cola = collections.deque()
+    visitados.add(delicuente)
+    orden[delicuente] = 0
+    cola.append(delicuente)
+    while cola:
+        v = cola.popleft()
+        if (orden[v] == saltos):
+                    return visitados
+        for adyacente in grafo.adyacentes(v):
+            if not adyacente in visitados:
+                visitados.add(adyacente)
+                orden[adyacente] = orden[v]+1
+                cola.append(adyacente)
+    return visitados
 
 def dfs_cfc(grafo, v, visitados, orden, p, s, cfcs, en_cfs):
     visitados.add(v)

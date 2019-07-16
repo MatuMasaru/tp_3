@@ -98,16 +98,10 @@ def mostrar_comunidades( grafo , n):
     comunidades  = filtrar_comunidades( biblioteca.label_propagation( grafo ) , volumen_comunidad )
     imprimir_comunidades( comunidades , volumen_comunidad , int(n))
 
-def divulgar_rumor(grafo ,delincuente ,saltos):
-    #print("divulgar_rumor")
-    visitados = collections.deque()
-    contador = 0
-    imprimir = collections.deque()
-    visitados.append(delincuente)
-    imprimir.append(delincuente)
-    biblioteca.radio_rumor(grafo ,delincuente ,int(saltos) ,contador ,visitados, imprimir)
-    imprimir.popleft()
-    biblioteca.imprimir_lista(imprimir ,SEPARACION_COMA)
+def divulgar_rumor(grafo ,delicuente ,saltos):
+    lista_vertice = biblioteca.radio_rumor(grafo ,delicuente ,int(saltos))
+    lista_vertice.remove(delicuente)
+    biblioteca.imprimir_lista(lista_vertice,SEPARACION_COMA)
 
 def hay_ciclo(grafo, vertice, saltos , recorrido, contador , origen):
     if (contador==saltos):
