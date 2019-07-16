@@ -5,7 +5,6 @@ import collections
 LARGO_RECORRIDO = 1000
 LABEL_ITERACIONES= 1000
 def imprimir_lista(lista, separador):
-
     print(separador.join(lista))
 
 def camino_minimo_bfs(grafo, origen):
@@ -49,8 +48,8 @@ def minimos_seguimientos_hasta_destino(grafo, origen ,destino):
                 visitados.add(adyacente)
                 padres[adyacente] = vertice  #esto busca por bfs al destino y si encuentra corta y lo pone como visitado.
                 orden[adyacente] =orden[vertice] + 1
-                if adyacente == destino:
-                    return padres,orden
+                if destino ==None and adyacente == destino:
+                        return padres,orden
                 cola.append(adyacente)
     return padres, orden
 
@@ -68,49 +67,49 @@ def random_walk(grafo):
         apariciones[w]= 0
     cantidad_vertices = len(grafo)
 
-    for j in range (0, LARGO_RECORRIDO):
+    for j in range (cantidad_vertices):
         vertice_origen = random.choice(lista_vertices)
         apariciones[vertice_origen] +=1
         contador = 0
-        for i in range(0, cantidad_vertices +contador):
+        for i in range(cantidad_vertices ):
             if not grafo.adyacentes(vertice_origen):
-                contador = cantidad_vertices -1
                 continue
             vertice_origen = random.choice(list(grafo.adyacentes(vertice_origen)))
             apariciones[vertice_origen] += 1
 
-            if i == (cantidad_vertices + contador -1 ):
+            if (i == cantidad_vertices -1 ):
                 contador = 0
     return apariciones
-"""def betweeness_centrality(grafo):
-    cent = {}
-    lista_vertices = []
-    for i in grafo.vertices:
-        cent[i] = 0
-        lista_vertices.append(i)
 
-    random.shuffle(lista_vertices)
-    print ("vertices aleatorios:", lista_vertices)
-    for v in grafo.vertices:
-        # hacia todos los demas vertices
-        distancia, padre = camino_minimo_bfs(grafo, v)          #aplicar camino minimo
+def counting_sort(centralidad):
+    lista_valores = list(centralidad.values())
+    minimo = min(lista_valores)
+    maximo =max(lista_valores)
+    rango = (maximo-minimo)+1
+    frecuencias = []
+	# inicializo todas las frecuencias en 0
+    for _ in range(rango):
+        frecuencias.append(0)
+    # cuento la frecuencia de cada numero
+    for valor in lista_valores:
+        frecuencias[valor-minimo]= frecuencias[valor-minimo]+ 1
+    # obtengo el arreglo de sumas acumuladas
+    # pongo la primera posicion en 0
+    acum=[]
+    acum.append(0)
+    for i in range(1,rango):
+        acum.append(acum[i - 1] + frecuencias[i - 1])
+    # pongo los valores en orden donde corresponde
+    ordenadas = []
+    for i in range(len(lista_valores)):
+        ordenadas.append(None)
+    for vertice in centralidad.keys():
+        indice = acum[centralidad[vertice]-minimo]
+        ordenadas[indice] = vertice
+        acum[centralidad[vertice] -minimo] += 1
+    return ordenadas
 
-        cent_aux = {}
-        for w in grafo.vertices: cent_aux[w] = 0
-        # Aca filtramos (de ser necesario) los vertices a distancia infinita,
-        # y ordenamos de mayor a menor
-        vertices_ordenados = ordenar_vertices(grafo, distancia)
 
-        for w in vertices_ordenados:
-            if padre[w[0]] !=None:
-                cent_aux[padre[w[0]]] += 1 + cent_aux[w[0]]
-        # le sumamos 1 a la centralidad de todos los vertices que se encuentren en
-        # el medio del camino
-
-        for w in grafo.vertices:
-            if w == v: continue
-            cent[w] += cent_aux[w]
-    return cent"""
 
 def max_freq(adyacentes, label):
     dict_recurrencia = {}
