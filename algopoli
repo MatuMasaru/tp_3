@@ -2,6 +2,7 @@
 import grafo
 import sys
 import comandos
+from time import time
 
 MIN_SEGUIMIENTOS = "min_seguimientos"
 MAS_IMPORTARNTES = "mas_imp"
@@ -16,12 +17,15 @@ def procesar_linea(separador,linea):
     return (linea.rstrip('\n')).split(separador)
 
 def cargar_vertices(archivo, grafo):
+    tiempo_innicial = time()
     for linea in archivo :
         vertices = procesar_linea('\t',linea)
         for i in vertices:
             if not grafo.vertice_pertenece(i):
                 grafo.agregar_vertice(i)
         grafo.agregar_arista(vertices[0],vertices[1])
+    tiempo_final = time() - tiempo_innicial
+    print("tiempo de carga de vertices ", tiempo_final)
 
 def ejecutar_comando(comando, grafo, parametros):
     numero = 0
@@ -62,11 +66,13 @@ def realizar_comandos(graf):
         ejecutar_comando(linea[0],graf, linea)
 
 def main():
+    tiempo_innicial = time()
     nom_archivo = sys.argv[1]
     graf = grafo.Grafo()
     with open(nom_archivo) as archivo:
         cargar_vertices(archivo, graf)
     if len(graf):
         realizar_comandos(graf)
-
+    tiempo_final = time() - tiempo_innicial
+    print("tiempo de ejecucion total ", tiempo_final)
 main()

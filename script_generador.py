@@ -2,7 +2,7 @@ import numpy as np
 import random
 
 EXP = 20
-SAMPLES = 100
+SAMPLES = 1000
 
 
 s = np.random.power(EXP, SAMPLES) * SAMPLES

@@ -20,7 +20,7 @@ class Grafo:
     def adyacentes(self, vertice):
         if not self.vertice_pertenece(vertice):
             return None
-        return self.vertices[vertice].keys()
+        return list(self.vertices[vertice].keys())
 
     def remover_vertice(self, vertice):
         if vertice in self.vertices:
@@ -48,9 +48,8 @@ class Grafo:
         if not self.esta_conectado(vertice_1, vertice_2): #si no esta no se remueve
             self.vertices[vertice_1].pop(vertice_2)   #sacar arista y devolverlo
 
-    def vertices(self):
+    def _vertices(self):
         return list(self.vertices.keys())
-
 
     def __len__(self):
         return self.numero_vertices

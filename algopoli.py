@@ -3,6 +3,7 @@ import grafo
 import sys
 import comandos
 
+from time import time
 MIN_SEGUIMIENTOS = "min_seguimientos"
 MAS_IMPORTARNTES = "mas_imp"
 PERSECUCION = "persecucion"
@@ -16,12 +17,14 @@ def procesar_linea(separador,linea):
     return (linea.rstrip('\n')).split(separador)
 
 def cargar_vertices(archivo, grafo):
+
     for linea in archivo :
         vertices = procesar_linea('\t',linea)
         for i in vertices:
             if not grafo.vertice_pertenece(i):
                 grafo.agregar_vertice(i)
         grafo.agregar_arista(vertices[0],vertices[1])
+
 
 def ejecutar_comando(comando, grafo, parametros):
     numero = 0
