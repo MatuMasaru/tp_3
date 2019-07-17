@@ -93,7 +93,7 @@ def random_walk(grafo):
 
             vertice_act = random.choice(grafo.adyacentes(vertice_act))
 
-    return importancia_delincuente
+    return importancia_delincuentesassa
 
 
 

@@ -39,17 +39,18 @@ class Grafo:
 
 
     def agregar_arista(self, salida_vertice, entrada_vertice, peso=1):
-        if not self.esta_conectado(salida_vertice, entrada_vertice):
-            self.vertices[salida_vertice][entrada_vertice] = peso
-            return True
-        return False
+        if not self.pertenece(entrada_vertice):
+			self.agregar_vertice(entrada_vertice)
+		if not self.pertenece(salida_vertice):
+			self.agregar_vertice(salida_vertice)
+        self.vertices[salida_vertice][entrada_vertice] = peso
 
     def remover_arista(self, vertice_1, vertice_2): #deberia devolverse la arista
         if not self.esta_conectado(vertice_1, vertice_2): #si no esta no se remueve
             self.vertices[vertice_1].pop(vertice_2)   #sacar arista y devolverlo
 
     def _vertices(self):
-        return list(self.vertices.keys())
+        return self.vertices.keys()
 
-    def __len__(self):
+    def cantidad_vertice(self):
         return self.numero_vertices
