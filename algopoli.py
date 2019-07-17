@@ -18,9 +18,6 @@ def procesar_linea(separador,linea):
 def cargar_vertices(archivo, grafo):
     for linea in archivo :
         vertices = procesar_linea('\t',linea)
-        for i in vertices:
-            if not grafo.vertice_pertenece(i):
-                grafo.agregar_vertice(i)
         grafo.agregar_arista(vertices[0],vertices[1])
 
 def ejecutar_comando(comando, grafo, parametros):
