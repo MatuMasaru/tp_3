@@ -3,6 +3,7 @@ min_seguimientos 170 159015
 min_seguimientos 2 263806
 min_seguimientos 890 71944
 mas_imp 30
+comunidades 10
 divulgar 19 3
 divulgar 333 2
 divulgar 92 4
@@ -13,10 +14,6 @@ persecucion 19,14,17 10
 persecucion 30 10
 persecucion 19,16 3
 persecucion 96,97 5
-comunidades 10
-comunidades 20
-comunidades 30
-cfc
 divulgar_ciclo 456 3
 divulgar_ciclo 99 5
 divulgar_ciclo 890 8
@@ -25,3 +22,4 @@ divulgar_ciclo 2345 14
 divulgar_ciclo 19 17
 divulgar_ciclo 10 1
 divulgar_ciclo 14 1
+cfc

@@ -19,7 +19,7 @@ class Grafo:
 
     def adyacentes(self, vertice):
         if not self.vertice_pertenece(vertice):
-            return None
+            return []
         return list(self.vertices[vertice].keys())
 
     def remover_vertice(self, vertice):
@@ -39,10 +39,10 @@ class Grafo:
 
 
     def agregar_arista(self, salida_vertice, entrada_vertice, peso=1):
-        if not self.pertenece(entrada_vertice):
-			self.agregar_vertice(entrada_vertice)
-		if not self.pertenece(salida_vertice):
-			self.agregar_vertice(salida_vertice)
+        if not self.vertice_pertenece(entrada_vertice):
+            self.agregar_vertice(entrada_vertice)
+        if not self.vertice_pertenece(salida_vertice):
+            self.agregar_vertice(salida_vertice)
         self.vertices[salida_vertice][entrada_vertice] = peso
 
     def remover_arista(self, vertice_1, vertice_2): #deberia devolverse la arista
@@ -50,7 +50,7 @@ class Grafo:
             self.vertices[vertice_1].pop(vertice_2)   #sacar arista y devolverlo
 
     def _vertices(self):
-        return self.vertices.keys()
+        return list(self.vertices.keys())
 
-    def cantidad_vertice(self):
+    def cantidad_vertices(self):
         return self.numero_vertices

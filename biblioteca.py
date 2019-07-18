@@ -37,7 +37,6 @@ def ordenar_vertices(grafo , distancia):# aplicar counting sort. para la central
     """devuelve un iterable  ordenado de mayor a menor  en funcion del valor del dict distancia"""
     return sorted(distancia.items(), key=itemgetter(1), reverse = True)
 
-
 def counting_sort(centralidad, minimos = True):
     lista_valores = list(centralidad.values())
     minimo = min(lista_valores)
@@ -72,30 +71,26 @@ def counting_sort(centralidad, minimos = True):
         acum[centralidad[vertice] -minimo] += 1
     return ordenadas
 
-
 def random_walk(grafo):
-    importancia_delincuente = {}
-    vertices =[]
+    vertices_aleatorios = random.choices(grafo._vertices() ,k =grafo.cantidad_vertices())
+    apariciones = {}
 
     for vertice in grafo._vertices():
-        vertices.append(vertice)
+        apariciones[vertice] = 0
 
-    for i in range(0, 3000):
+    for i in range(0, grafo.cantidad_vertices()):
 
-        vertice_act = random.choice(vertices)
-
-        for i in range(0, 150):
-
-            if vertice_act in importancia_delincuente:
-                importancia_delincuente[vertice_act] += 1
-            else:
-                importancia_delincuente[vertice_act] = 1
-
-            vertice_act = random.choice(grafo.adyacentes(vertice_act))
-
-    return importancia_delincuentesassa
+        vertice_act = vertices_aleatorios[i]
+        apariciones[vertice_act] += 1
+        for i in range(0, 20):
+            lista_Adyacentes= list(grafo.adyacentes(vertice_act))
+            if not lista_Adyacentes:
+                continue
+            vertice_act = random.choice(lista_Adyacentes)
+            apariciones[vertice_act] += 1
 
 
+    return apariciones
 
 def max_freq(adyacentes, label):
     dict_recurrencia = {}

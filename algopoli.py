@@ -66,7 +66,7 @@ def main():
     graf = grafo.Grafo()
     with open(nom_archivo) as archivo:
         cargar_vertices(archivo, graf)
-    if len(graf):
+    if graf.cantidad_vertices():
         realizar_comandos(graf)
 
 main()

@@ -20,9 +20,6 @@ def cargar_vertices(archivo, grafo):
     tiempo_innicial = time()
     for linea in archivo :
         vertices = procesar_linea('\t',linea)
-        for i in vertices:
-            if not grafo.vertice_pertenece(i):
-                grafo.agregar_vertice(i)
         grafo.agregar_arista(vertices[0],vertices[1])
     tiempo_final = time() - tiempo_innicial
     print("tiempo de carga de vertices ", tiempo_final)
@@ -71,7 +68,7 @@ def main():
     graf = grafo.Grafo()
     with open(nom_archivo) as archivo:
         cargar_vertices(archivo, graf)
-    if len(graf):
+    if graf.cantidad_vertices():
         realizar_comandos(graf)
     tiempo_final = time() - tiempo_innicial
     print("tiempo de ejecucion total ", tiempo_final)
